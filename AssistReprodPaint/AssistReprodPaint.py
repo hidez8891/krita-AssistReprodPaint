@@ -1,8 +1,8 @@
-from krita import *
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit
-from PyQt5.QtGui import QImage
 from PyQt5.QtCore import QByteArray
+from PyQt5.QtGui import QImage
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit
+from krita import *
 from urllib import request, error
 
 
@@ -35,7 +35,7 @@ class AssistReprodPaint(Extension):
         pass
 
     def createActions(self, window):
-        action = window.createAction("TraceSketch-ready", "スケッチの準備")
+        action = window.createAction("AssitRepordPaint-start", "start Reprod-Painting")
         action.triggered.connect(self.doCreateView)
         action.triggered.connect(self.doSetGrid)
         action.triggered.connect(self.doSplitView)
