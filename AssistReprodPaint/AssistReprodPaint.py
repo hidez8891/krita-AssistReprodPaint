@@ -1,22 +1,21 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import QByteArray
 from PyQt5.QtGui import QImage
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QFormLayout, QLineEdit
 from krita import *
 from urllib import request, error
 
 
-class InputUrlDialog(QDialog):
+class InputUrlDialog(QtWidgets.QDialog):
 
     def __init__(self):
         super().__init__()
 
-        layout = QFormLayout(self)
+        layout = QtWidgets.QFormLayout(self)
 
-        self.url_input = QLineEdit(self)
+        self.url_input = QtWidgets.QLineEdit(self)
         layout.addRow("URL", self.url_input)
 
-        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+        buttons = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel, self)
         layout.addWidget(buttons)
 
         buttons.accepted.connect(self.accept)
@@ -34,7 +33,7 @@ class AssistReprodPaint(Extension):
     def setup(self):
         pass
 
-    def createActions(self, window):
+    def createActions(self, window: Window):
         action = window.createAction("AssitRepordPaint-start", "start Reprod-Painting")
         action.triggered.connect(self.doCreateView)
         action.triggered.connect(self.doSetGrid)
@@ -43,7 +42,7 @@ class AssistReprodPaint(Extension):
     def downloadImage(self) -> QImage | None:
         # input URL
         url_dialog = InputUrlDialog()
-        if url_dialog.exec_() == QDialog.DialogCode.Rejected:
+        if url_dialog.exec_() == QtWidgets.QDialog.DialogCode.Rejected:
             return None
         url = url_dialog.getURL()
 
@@ -62,7 +61,7 @@ class AssistReprodPaint(Extension):
                       color_depth: str = "U8",
                       profile: str = "",
                       resolution: float = 300,
-                      ) -> any:
+                      ) -> View:
         # add new document
         app = Krita.instance()
         doc = app.createDocument(width, height,
