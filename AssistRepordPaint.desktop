@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+X-KDE-Library=AssistReprodPaint
+X-Python-2-Compatible=false
+Name=AssistReprodPaint
+Comment=Assist tool for reproduction of a painting
+X-Krita-Manual=AssistReprodPaint.html
