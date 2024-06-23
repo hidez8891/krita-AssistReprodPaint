@@ -58,13 +58,36 @@ class AssistReprodPaint(Extension):
         return img_qt
 
     def appendNewView(self, view_name: str, width: int, height: int,
-                      color_model: str = "RGBA",
-                      color_depth: str = "U8",
+                      color_model: str = "",
+                      color_depth: str = "",
                       profile: str = "",
-                      resolution: float = 300,
+                      resolution: float = -1,
                       ) -> View:
-        # add new document
         app = Krita.instance()
+
+        # load default parameter
+        if color_model == "":
+            color_model = app.readSetting("", "colorModelDef", "")
+            if color_model == "":
+                # TODO ERROR Message
+                return
+        if color_depth == "":
+            color_depth = app.readSetting("", "colorDepthDef", "")
+            if color_depth == "":
+                # TODO ERROR Message
+                return
+        if profile == "":
+            profile = app.readSetting("", "colorProfileDef", "")
+            if profile == "":
+                # TODO ERROR Message
+                return
+        if resolution < 0:
+            resolution = float(app.readSetting("", "imageResolutionDef", "-1"))
+            if resolution < 0:
+                # TODO ERROR Message
+                return
+
+        # add new document
         doc = app.createDocument(width, height,
                                  view_name, color_model, color_depth,
                                  profile, resolution)
