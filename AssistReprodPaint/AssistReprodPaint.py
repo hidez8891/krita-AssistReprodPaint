@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, Qt
 from PyQt5.QtCore import QByteArray
 from PyQt5.QtGui import QImage
 from krita import *
@@ -57,6 +57,25 @@ class AssistReprodPaint(Extension):
             return None
         return img_qt
 
+    def scaleImage(self, img: QImage) -> QImage | None:
+        app = Krita.instance()
+
+        # load default parameter
+        default_width = int(app.readSetting("", "imageWidthDef", "-1"))
+        default_height = int(app.readSetting("", "imageHeightDef", "-1"))
+        if default_width < 0 or default_height < 0:
+            # TODO ERROR Message
+            return None
+
+        # scale image
+        scale_x = default_width / float(img.width())
+        scale_y = default_height / float(img.height())
+        if scale_x > scale_y:
+            return img.scaledToWidth(default_width, 1)
+        else:
+            return img.scaledToHeight(default_height, 1)
+
+
     def appendNewView(self, view_name: str, width: int, height: int,
                       color_model: str = "",
                       color_depth: str = "",
@@ -110,6 +129,10 @@ class AssistReprodPaint(Extension):
     def doCreateView(self):
         # download Image
         img = self.downloadImage()
+        if img == None:
+            return
+        # scale Image
+        img = self.scaleImage(img)
         if img == None:
             return
 
