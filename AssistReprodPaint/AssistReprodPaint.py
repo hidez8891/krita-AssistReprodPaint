@@ -53,6 +53,7 @@ class AssistReprodPaint(Extension):
                 img_qt = QImage()
                 img_qt.loadFromData(res.read())
         except error.HTTPError as e:
+            # TODO ERROR Message
             return None
         return img_qt
 
@@ -145,6 +146,7 @@ class AssistReprodPaint(Extension):
         app = Krita.instance()
         mode = int(app.readSetting("", "mdi_viewmode", "-1"))
         if mode != 0:
+            # TODO ERROR Message
             return
         app.action('windows_tile').activate(0)
 
