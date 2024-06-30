@@ -113,15 +113,14 @@ class AssistReprodPaint(Extension):
         view = app.activeWindow().addView(doc)
 
         # set document's node
-        node = doc.activeNode()
-        if node == None:
-            node = doc.createNode("background", "paintlayer")
-            doc.rootNode().addChildNode(node, None)
+        node = doc.createNode("paint 1", "paintlayer")
+        doc.rootNode().addChildNode(node, None)
+        doc.setActiveNode(node)
         doc.refreshProjection()
         return view
 
     def copyImageToView(self, img, view):
-        node = view.document().activeNode()
+        node = view.document().nodeByName("paint 1")
         node.setPixelData(QByteArray(img.bits().asstring(img.byteCount())), 0, 0, img.width(), img.height())
         node.projectionPixelData(0, 0, img.width(), img.height())
         view.document().refreshProjection()
