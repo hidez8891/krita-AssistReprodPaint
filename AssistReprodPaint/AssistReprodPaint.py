@@ -106,17 +106,17 @@ class AssistReprodPaint(Extension):
                 # TODO ERROR Message
                 return
 
-        # add new document
+        # create new document
         doc = app.createDocument(width, height,
                                  view_name, color_model, color_depth,
                                  profile, resolution)
-        view = app.activeWindow().addView(doc)
 
         # set document's node
         node = doc.createNode("paint 1", "paintlayer")
         doc.rootNode().addChildNode(node, None)
-        doc.setActiveNode(node)
-        doc.refreshProjection()
+
+        # add new document
+        view = app.activeWindow().addView(doc)
         return view
 
     def copyImageToView(self, img, view):
