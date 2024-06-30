@@ -194,6 +194,8 @@ class AssistReprodPaint(Extension):
             # TODO ERROR Message
             return
         app.action('windows_tile').activate(0)
+        if app.activeDocument().name() != "Draw Image":
+            app.action('windows_next').activate(0)
 
 
 Krita.instance().addExtension(AssistReprodPaint(Krita.instance()))
